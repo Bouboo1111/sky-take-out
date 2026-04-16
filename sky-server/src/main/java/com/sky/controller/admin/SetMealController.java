@@ -4,7 +4,7 @@ import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
-import com.sky.service.SetMealService;
+import com.sky.service.SetmealService;
 import com.sky.vo.SetmealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 public class SetMealController {
     @Autowired
-    private SetMealService setMealService;
+    private SetmealService setMealService;
     /**
      * 新增套餐
      * @param setmealDTO

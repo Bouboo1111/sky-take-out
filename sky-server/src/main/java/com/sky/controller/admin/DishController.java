@@ -9,9 +9,11 @@ import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -19,6 +21,8 @@ import java.util.List;
 public class DishController {
     @Autowired
     private DishService dishService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 插入菜品和口味
@@ -29,6 +33,9 @@ public class DishController {
     public Result save(@RequestBody DishDTO dishDTO){
         log.info("新增菜品{}",dishDTO);
         dishService.saveWithFlavor(dishDTO);
+        Long categoryId = dishDTO.getCategoryId();
+        deleteCache("dish_"+categoryId);
+        log.info("删除缓存{}",categoryId);
         return Result.success();
 
     }
@@ -52,6 +59,8 @@ public class DishController {
     public Result delete(@RequestParam List<Long> ids){
         log.info("菜品批量删除{}",ids);
         dishService.deleteBatch(ids);
+        deleteCache("dish_*");
+        log.info("删除缓存");
         return Result.success();
     }
 
@@ -71,6 +80,8 @@ public class DishController {
     @PutMapping
     public Result update(@RequestBody DishDTO dishDTO){
         dishService.updateWithFlavor(dishDTO);
+        deleteCache("dish_*");
+        log.info("删除缓存");
         return Result.success();
     }
 
@@ -82,6 +93,8 @@ public class DishController {
     @PostMapping("/status/{status}")
     public Result updateStatus(@PathVariable Integer status,Long id){
         dishService.startOrStop(status,id);
+        deleteCache("dish_*");
+        log.info("删除缓存");
         return Result.success();
     }
 
@@ -94,6 +107,11 @@ public class DishController {
     public Result<List<Dish>> list(Long categoryId){
         List<Dish> list = dishService.list(categoryId);
         return Result.success(list);
+    }
+
+    private void deleteCache(String key){
+        Set<String> keys = redisTemplate.keys(key);
+        redisTemplate.delete(keys);
     }
 
 

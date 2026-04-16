@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 @Mapper
-public interface SetMealDishMapper {
+public interface SetmealDishMapper {
     /**
      * 根据菜品id查询对应的套餐id
      * @param dishIds

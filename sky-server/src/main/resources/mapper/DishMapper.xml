@@ -25,6 +25,18 @@
         order by d.update_time desc
     </select>
 
+    <select id="listWithFlavor" resultType="com.sky.entity.Dish">
+        select * from dish
+        <where>
+            <if test="categoryId!=null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
     <delete id="deleteBatch">
         delete from dish where id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
