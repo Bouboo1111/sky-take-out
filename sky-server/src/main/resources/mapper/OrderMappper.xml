@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.OrderMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into orders (user_id,number, pay_method, pay_status, amount, remark,phone,address, consignee,
+                            address_book_id, status, cancel_reason, rejection_reason,checkout_time,
+                            cancel_time, estimated_delivery_time, delivery_status,
+                            delivery_time, tableware_number, tableware_status, pack_amount, order_time)
+        values (#{userId},#{number},#{payMethod},#{payStatus},#{amount},
+                #{remark},#{phone},#{address},#{consignee},#{addressBookId},#{status},#{cancelReason},
+                #{rejectionReason},#{checkoutTime},#{cancelTime},#{estimatedDeliveryTime},#{deliveryStatus},
+                #{deliveryTime},#{tablewareNumber},#{tablewareStatus},#{packAmount},#{orderTime})
+    </insert>
+</mapper>
