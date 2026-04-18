@@ -12,6 +12,10 @@ import java.util.List;
 public interface ShoppingCartMapper {
 
     List<ShoppingCart> list(ShoppingCart shoppingCart);
+    /**
+     * 更新购物车数据
+     * @param shoppingCart
+     */
     @Update("update shopping_cart set number = #{number} where id = #{id}")
     void updateNumberById(ShoppingCart shoppingCart);
 

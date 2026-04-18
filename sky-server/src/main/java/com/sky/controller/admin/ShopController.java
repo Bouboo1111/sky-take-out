@@ -4,6 +4,7 @@ import com.sky.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("adminShopController")
@@ -21,7 +22,8 @@ public class ShopController {
     @PutMapping("/{status}")
     public Result setStatus(@PathVariable Integer status){
         log.info("设置营业状态：{}",status==1?"营业中":"打烊中");
-        redisTemplate.opsForValue().set(KEY_SHOP_STATUS,status);//存储到redis中
+        redisTemplate.setStringSerializer(new StringRedisSerializer());
+        redisTemplate.opsForValue().set(KEY_SHOP_STATUS, String.valueOf(status));
         return Result.success();
     }
 
@@ -31,7 +33,9 @@ public class ShopController {
      */
     @GetMapping("/status")
     public Result<Integer> getStatus(){
-        Integer status = (Integer) redisTemplate.opsForValue().get(KEY_SHOP_STATUS);
+        redisTemplate.setStringSerializer(new StringRedisSerializer());
+        String statusStr = (String) redisTemplate.opsForValue().get(KEY_SHOP_STATUS);
+        Integer status = statusStr != null ? Integer.parseInt(statusStr) : null;
         log.info("获取营业状态：{}",status==1?"营业中":"打烊中");
         return Result.success(status);
     }
