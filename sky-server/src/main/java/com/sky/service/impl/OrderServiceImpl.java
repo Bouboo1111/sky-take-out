@@ -402,6 +402,13 @@ public class OrderServiceImpl implements OrderService {
         }
         ordersDB.setRemark("请尽快开始接单");
         orderMapper.update(ordersDB);
+
+        // 通过WebSocket向客户端发起催单
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("type", 2);// 2表示用户催单
+        map.put("orderId", ordersDB.getId());
+        map.put("content", "订单号"+ordersDB.getNumber()+"的订单，请开始接单");
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
     }
 
     /**
