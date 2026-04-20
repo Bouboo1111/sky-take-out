@@ -3,6 +3,7 @@ package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -79,5 +80,28 @@ public interface OrderMapper {
      */
     Double getDateStatistics(LocalDateTime begin, LocalDateTime end,Integer status);
 
+    /**
+     * 统计每日订单数据
+     * @param begin
+     * @param end
+     * @return
+     */
+    Integer getOrderCount(LocalDateTime begin, LocalDateTime end);
 
+    /**
+     * 统计每日有效订单数据
+     * @param begin
+     * @param end
+     * @param status
+     * @return
+     */
+    Integer getValidOrderCount(LocalDateTime begin, LocalDateTime end, Integer status);
+
+    /**
+     * 统计销售量排名的前10个商品
+     * @param begin
+     * @param end
+     * @return
+     */
+    List<Orders> getOrders(LocalDateTime begin, LocalDateTime end);
 }
