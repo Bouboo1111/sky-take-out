@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -69,4 +70,14 @@ public interface OrderMapper {
      */
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatus(Integer status, LocalDateTime orderTime);
+
+    /**
+     * 根据天数统计订单数量
+     * @param  begin
+     * @param end
+     * @return
+     */
+    Double getDateStatistics(LocalDateTime begin, LocalDateTime end,Integer status);
+
+
 }

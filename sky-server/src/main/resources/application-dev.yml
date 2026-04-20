@@ -19,3 +19,9 @@ sky:
   wechat:
     secret: 39465c585166934bc73cd061ead485bd
     appid: wxb5fa61c49d8dc393
+  baidu:
+    ak: 6RcqZConzSTza8TnflvRSRUWurJ7FKhV
+  shop:
+      address: 广东省湛江市麻章区海大路1号
+  delivery:
+      max-distance: 5000
